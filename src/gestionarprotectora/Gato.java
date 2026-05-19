@@ -4,19 +4,21 @@
  */
 package gestionarprotectora;
 
+import java.io.Serializable;
+
 /**
  *
  * @author DAW1-M
  */
-public class Gato extends Animal {
+public class Gato extends Animal implements Serializable{
 
     private String Pelaje;
     private boolean esAgresivo;
 
-    public Gato(int id, String nombre, int edad, Fecha fechaEntrada, String Pelaje) {
+    public Gato(int id, String nombre, int edad, Fecha fechaEntrada, String Pelaje, boolean esAgresivo) {
         super(id, nombre, edad, fechaEntrada);
         this.Pelaje = Pelaje;
-        this.esAgresivo = false;
+        this.esAgresivo = esAgresivo;
     }
 
     @Override

@@ -89,13 +89,13 @@ public abstract class Animal implements IInteractuable, Serializable {
     @Override
     public String toString() {
         String text;
-        text = String.format("%5d %16s %5d %12d %7f", id, nombre, edad, fechaEntrada, calcularTasaAdopcion());
+        text = String.format("%5d %16s %5d %12s %7f", id, nombre, edad, fechaEntrada, calcularTasaAdopcion());
         return text;
     }
 
     public String fichaAnimal() {
         String text;
-        text = String.format("%5d %10s %5d %12d\n", id, nombre, edad, fechaEntrada);
+        text = String.format("%5d %10s %5d %25s", id, nombre, edad, fechaEntrada);
         return text;
     }
 }

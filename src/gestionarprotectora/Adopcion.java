@@ -4,11 +4,13 @@
  */
 package gestionarprotectora;
 
+import java.io.Serializable;
+
 /**
  *
  * @author DAW1-M
  */
-public class Adopcion {
+public class Adopcion implements Serializable{
     private Fecha fechaSolicitud;
     private String nombreAdoptante;
     private Animal adoptado;

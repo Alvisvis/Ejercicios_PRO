@@ -10,11 +10,46 @@ package gestionarprotectora;
  */
 public class GestionarProtectora {
 
-    static Protectora protectora = new Protectora();
-    
+    static Protectora prot = new Protectora();
+
     public static void main(String[] args) {
-        
+        prot.leerBinario();
+        int op;
+        do {
+            menu();
+            op = Entrada.entero("Que opcion elijas? ");
+            switch (op) {
+                case 1:
+                    prot.listarAnimales();
+                    break;
+                case 2:
+
+                    break;
+                case 3:
+
+                    break;
+                case 4:
+                    String _nombreArchivos = Entrada.cadena("Cual es el nombre del archivo? ");
+                    prot.cargarAnimales(_nombreArchivos);
+                    break;
+                case 5:
+
+                    break;
+                case 6:
+
+                    break;
+                case 7:
+
+                    break;
+                case 8:
+
+                    break;
+            }
+            
+        } while (op != 0);
+        prot.guardarBinario();
     }
+
     public static void menu() {
         System.out.println("========= GESTIÓN PROTECTORA MUNDO ANIMAL =========");
         System.out.println("1. Listar animales");

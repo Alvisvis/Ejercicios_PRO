@@ -4,11 +4,13 @@
  */
 package gestionarprotectora;
 
+import java.io.Serializable;
+
 /**
  *
  * @author DAW1-M
  */
-public class Revision {
+public class Revision implements Serializable{
     private Fecha fecha;
     private String diagnostico;
 

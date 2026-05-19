@@ -4,11 +4,13 @@
  */
 package gestionarprotectora;
 
+import java.io.Serializable;
+
 /**
  *
  * @author DAW1-M
  */
-public class Perro extends Animal {
+public class Perro extends Animal implements Serializable{
 
     private String raza;
     private boolean entrenado;

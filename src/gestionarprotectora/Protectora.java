@@ -5,6 +5,13 @@
 package gestionarprotectora;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -12,7 +19,7 @@ import java.util.Scanner;
  *
  * @author DAW1-M
  */
-public class Protectora {
+public class Protectora implements Serializable {
 
     private ArrayList<Animal> animales;
     private ArrayList<Adopcion> adopciones;
@@ -20,6 +27,12 @@ public class Protectora {
     public Protectora() {
         this.animales = new ArrayList<>();
         this.adopciones = new ArrayList<>();
+    }
+
+    public void listarAnimales() {
+        for (Animal animale : animales) {
+            System.out.println(animale.toString());
+        }
     }
 
     public Animal getAnimal(int _id, String nombre) {
@@ -46,106 +59,51 @@ public class Protectora {
     }
 
     public void cargarAnimales(String _nombreArchivos) {
-        File fichero;
-        Scanner sc;
-        Animal a;
-        try {
-            sc = new Scanner(new File(_nombreArchivos));
+        try (Scanner sc = new Scanner(new File(_nombreArchivos))) {
             while (sc.hasNextLine()) {
                 String linea = sc.nextLine();
                 String[] atributos = linea.split(",");
+
+                //Atributos en comun
+                int id = Integer.parseInt(atributos[1]);
+                String nombre = atributos[2];
+                int edad = Integer.parseInt(atributos[3]);
+                Fecha fecha = Fecha.stringToFecha(atributos[4]);
+
                 if (atributos[0].equals("Perro")) {
-                    int id = Integer.parseInt(atributos[1]);
-                    String nombre = atributos[2];
-                    int edad = Integer.parseInt(atributos[3]);
-                    Fecha fecha = Fecha.stringToFecha(atributos[4]);
                     String raza = atributos[5];
                     boolean entrenado = Boolean.parseBoolean(atributos[6]);
-//                        anadirAnimal(a) = new Perro(id, nombre, edad, fecha, raza, entrenado);
-
+                    Perro p = new Perro(id, nombre, edad, fecha, raza, entrenado);
+                    anadirAnimal(p);
+                } else if (atributos[0].equals("Gato")) {
+                    String pelaje = atributos[5];
+                    boolean esAgresivo = Boolean.parseBoolean(atributos[6]);
+                    Gato g = new Gato(id, nombre, edad, fecha, pelaje, esAgresivo);
+                    anadirAnimal(g);
                 }
-
             }
-        } catch (Exception e) {
+        } catch (FileNotFoundException | NumberFormatException e) {
+            System.out.println("El archivo " + _nombreArchivos + " no ha sido encontrado");
         }
     }
-}
-//Codigo comentado de ejemplo para hacer ficheros de texto
 
-//        File fichero;
-//        Scanner sc = null;
-//        try {
-//            sc = new Scanner(new File(rutatxtC));
-//
-//            while (sc.hasNextLine()) {
-//                String linea = sc.nextLine();
-//                String[] atributos = linea.split("#");
-//
-//                if (atributos[0].equals("Cliente")) {
-//                    String dni = atributos[1];
-//                    String nombre = atributos[2];
-//                    String direccion = atributos[3];
-//                    String localidad = atributos[4];
-//                    String codigoPostal = atributos[5];
-//                    anadirCliente(clientes[numCliente++] = new Cliente(dni, nombre, direccion, localidad, codigoPostal));
-//                }
-//              } catch (Exception e) {
-//            System.out.println("Error leyendo clientes:" + e.getMessage());
-//        }
-// public static boolean escribirArchivo(String ruta, String datos, boolean _sobreEscribir) {
-//        boolean correcto = false;
-//
-//        File archivo = new File(ruta);
-//        FileWriter fichero = null;
-//
-//        try {
-//            fichero = new FileWriter(archivo, _sobreEscribir);
-//
-//            System.out.println("Guardando información............");
-//
-//            fichero.write(datos);
-//            fichero.close();
-//
-//            System.out.println("Información guardada");
-//            correcto = true;
-//
-//        } catch (FileNotFoundException ex) {
-//            System.out.println("Fichero no encontrado");
-//
-//        } catch (IOException e) {
-//            System.out.println("Mensaje:  " + e.getMessage());
-//        }
-//
-//        return correcto;
-//    }
-//
-//    public static String leerArchivo(String ruta) {
-//        File fichero = new File(ruta);
-//        Scanner sc = null;
-//        StringBuilder contenido = new StringBuilder();
-//
-//        try {
-//            System.out.println("Leyendo el contenido del fichero..........\n\n");
-//            sc = new Scanner(fichero);
-//
-//            // leer línea a linea el fichero
-//            while (sc.hasNextLine()) {
-//                contenido.append(sc.nextLine()).append("\n");
-//            }
-//
-//            System.out.println("\n --->>   Lectura completada");
-//
-//        } catch (Exception e) {
-//            System.out.println("Mensaje:  " + e.getMessage());
-//        } finally {
-//            try {
-//                if (sc != null) {
-//                    sc.close();
-//                }
-//            } catch (Exception e2) {
-//                System.out.println("Mensaje fichero:   " + e2.getMessage());
-//            }
-//        }
-//        return contenido.toString();
-//    }
-//}
+    public void leerBinario() {
+        try (ObjectInputStream ob = new ObjectInputStream(new FileInputStream("protectora.dat"))) {
+            ob.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("No se ha podido leer el archivo");
+        }
+    }
+
+    public void guardarBinario() {
+        try (ObjectOutputStream obs = new ObjectOutputStream(new FileOutputStream("protectora.dat"))) {
+
+            obs.writeObject(animales);
+            obs.writeObject(adopciones);
+            System.out.println("datos guardados");
+        } catch (Exception e) {
+            System.out.println("No se ha podido escribir los datos");
+        }
+    }
+
+}
