@@ -36,14 +36,15 @@ public class Perro extends Animal implements Serializable{
         System.out.println("Juega con un hueso");
     }
 
-    @Override
-    public String toString() {
-        String text;
-        text = super.fichaAnimal() 
-                + "Raza: " + this.raza + "\t" + "Entrenado? " + (this.entrenado ? "Si" : "No")
-                + "\nTasa de adopcion: " + calcularTasaAdopcion();
-        return text;
-    }
+//    @Override
+//    public String toString() {
+//        String text;
+//        text = super.fichaAnimal() 
+//                + "\n"
+//                + "Raza: " + this.raza + "\t" + "Entrenado? " + (this.entrenado ? "Si" : "No")
+//                + "\nTasa de adopcion: " + calcularTasaAdopcion();
+//        return text;
+//    }
 
     
 

@@ -10,17 +10,21 @@ package gestionarprotectora;
  */
 public class GestionarProtectora {
 
-    static Protectora prot = new Protectora();
-
     public static void main(String[] args) {
-        prot.leerBinario();
+        Protectora prot = new Protectora();
+        
+        if (prot != null) prot = prot.leerBinario();
+        
+
         int op;
         do {
             menu();
             op = Entrada.entero("Que opcion elijas? ");
             switch (op) {
                 case 1:
+                    System.out.printf("%4d %8s %3d %6s %7f\n");
                     prot.listarAnimales();
+                    System.out.println("");
                     break;
                 case 2:
 
@@ -45,7 +49,7 @@ public class GestionarProtectora {
 
                     break;
             }
-            
+
         } while (op != 0);
         prot.guardarBinario();
     }

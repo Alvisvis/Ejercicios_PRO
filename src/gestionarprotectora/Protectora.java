@@ -29,9 +29,14 @@ public class Protectora implements Serializable {
         this.adopciones = new ArrayList<>();
     }
 
+    public Protectora(ArrayList<Animal> animales, ArrayList<Adopcion> adopciones) {
+        this.animales = animales;
+        this.adopciones = adopciones;
+    }
+
     public void listarAnimales() {
         for (Animal animale : animales) {
-            System.out.println(animale.toString());
+            System.out.print(animale.toString());
         }
     }
 
@@ -87,19 +92,25 @@ public class Protectora implements Serializable {
         }
     }
 
-    public void leerBinario() {
+    public  Protectora leerBinario() {
+        Protectora p = new Protectora();
         try (ObjectInputStream ob = new ObjectInputStream(new FileInputStream("protectora.dat"))) {
-            ob.readObject();
-        } catch (IOException | ClassNotFoundException e) {
+            p = (Protectora) ob.readObject();
+            ob.close();
+        } catch (Exception e) {
             System.out.println("No se ha podido leer el archivo");
         }
+        return p;
     }
 
     public void guardarBinario() {
         try (ObjectOutputStream obs = new ObjectOutputStream(new FileOutputStream("protectora.dat"))) {
 
-            obs.writeObject(animales);
-            obs.writeObject(adopciones);
+//            obs.writeObject(animales);
+//            obs.writeObject(adopciones);
+            Protectora p = new Protectora(animales, adopciones);
+            obs.writeObject(p);
+            obs.close();
             System.out.println("datos guardados");
         } catch (Exception e) {
             System.out.println("No se ha podido escribir los datos");
