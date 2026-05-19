@@ -13,10 +13,10 @@ public class Perro extends Animal {
     private String raza;
     private boolean entrenado;
 
-    public Perro(int id, String nombre, int edad, Fecha fechaEntrada, String raza) {
+    public Perro(int id, String nombre, int edad, Fecha fechaEntrada, String raza, boolean entrenado) {
         super(id, nombre, edad, fechaEntrada);
         this.raza = raza;
-        this.entrenado = false;
+        this.entrenado = entrenado;
     }
 
     @Override

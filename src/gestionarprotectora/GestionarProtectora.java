@@ -13,7 +13,6 @@ public class GestionarProtectora {
     static Protectora protectora = new Protectora();
     
     public static void main(String[] args) {
-        protectora.guardadoBinario();
         
     }
     public static void menu() {
