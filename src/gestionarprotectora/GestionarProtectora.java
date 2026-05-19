@@ -21,33 +21,27 @@ public class GestionarProtectora {
             menu();
             op = Entrada.entero("Que opcion elijas? ");
             switch (op) {
-                case 1:
+                case 1 -> {
                     System.out.printf("%4d %8s %3d %6s %7f\n");
                     prot.listarAnimales();
                     System.out.println("");
-                    break;
-                case 2:
-
-                    break;
-                case 3:
-
-                    break;
-                case 4:
+                }
+                case 2 -> {
+                }
+                case 3 -> {
+                }
+                case 4 -> {
                     String _nombreArchivos = Entrada.cadena("Cual es el nombre del archivo? ");
                     prot.cargarAnimales(_nombreArchivos);
-                    break;
-                case 5:
-
-                    break;
-                case 6:
-
-                    break;
-                case 7:
-
-                    break;
-                case 8:
-
-                    break;
+                }
+                case 5 -> {
+                }
+                case 6 -> {
+                }
+                case 7 -> {
+                }
+                case 8 -> {
+                }
             }
 
         } while (op != 0);
