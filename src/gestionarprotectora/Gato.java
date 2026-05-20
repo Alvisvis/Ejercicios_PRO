@@ -10,16 +10,17 @@ import java.io.Serializable;
  *
  * @author DAW1-M
  */
-public class Gato extends Animal implements Serializable{
+public class Gato extends Animal implements Serializable {
 
     private String Pelaje;
     private boolean esAgresivo;
 
-    public Gato( String nombre, int edad, Fecha fechaEntrada, String Pelaje, boolean esAgresivo) {
-        super( nombre, edad, fechaEntrada);
+    public Gato(String nombre, int edad, Fecha fechaEntrada, String Pelaje, boolean esAgresivo) {
+        super(nombre, edad, fechaEntrada);
         this.Pelaje = Pelaje;
         this.esAgresivo = esAgresivo;
     }
+
     public Gato(int id, String nombre, int edad, Fecha fechaEntrada, String Pelaje, boolean esAgresivo) {
         super(id, nombre, edad, fechaEntrada);
         this.Pelaje = Pelaje;
@@ -42,11 +43,12 @@ public class Gato extends Animal implements Serializable{
     }
 
     @Override
-    public String toString() {
+    public String fichaAnimal() {
         String text;
-        text = super.fichaAnimal() 
-                + "Pelaje: " + this.Pelaje + "\t" + "Agresivo: " + (this.esAgresivo ? "Si" : "No")
-                + "\nTasa de adopcion: " + calcularTasaAdopcion();
+        text = super.fichaAnimal()
+                + String.format("Pelaje: %-12s Agresivo: %-5s\nTasa de adopción: %-1.1s€\n",
+                        this.Pelaje, (this.esAgresivo ? "Si" : "No"), calcularTasaAdopcion())
+                + super.getHistorialMedico().toString();
         return text;
     }
 }

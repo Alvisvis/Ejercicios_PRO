@@ -20,12 +20,12 @@ public class Perro extends Animal implements Serializable {
         this.raza = raza;
         this.entrenado = entrenado;
     }
+
     public Perro(int id, String nombre, int edad, Fecha fechaEntrada, String raza, boolean entrenado) {
         super(id, nombre, edad, fechaEntrada);
         this.raza = raza;
         this.entrenado = entrenado;
     }
-    
 
     @Override
     double calcularTasaAdopcion() {
@@ -42,13 +42,14 @@ public class Perro extends Animal implements Serializable {
         System.out.println("Juega con un hueso");
     }
 
-//    @Override
-//    public String toString() {
-//        String text;
-//        text = super.fichaAnimal() 
-//                + "\n"
-//                + "Raza: " + this.raza + "\t" + "Entrenado? " + (this.entrenado ? "Si" : "No")
-//                + "\nTasa de adopcion: " + calcularTasaAdopcion();
-//        return text;
-//    }
+    @Override
+    public String fichaAnimal() {
+        String text;
+        text = super.fichaAnimal()
+                + String.format("Pelaje: %-12s Agresivo: %-5s\nTasa de adopción: %-1.1s€\n",
+                        this.raza, (this.entrenado ? "Si" : "No"), calcularTasaAdopcion())
+                + super.getHistorialMedico().toString();
+
+        return text;
+    }
 }

@@ -23,11 +23,15 @@ public class GestionarProtectora {
             op = Entrada.entero("Que opcion elijas? ");
             switch (op) {
                 case 1 -> {
+                    System.out.println("--- LISTADO DE ANIMALES EN EL CENTRO ---");
+                    System.out.printf("%-5s %-10s %-6s %-12s %-7s %7s\n", "Id", "Nombre", "Edad", "Fecha", "Tasa", "Sonido");
                     prot.listarAnimales();
-                    System.out.println("");
+
                 }
                 case 2 -> {
-
+                    System.out.println("FICHA DE ANIMAL");
+                    System.out.println("------------------");
+                    prot.listarAnimalesFicha();
                 }
                 case 3 -> {
                     System.out.println("--- DAR DE ALTA NUEVO ANIMAL ---");
@@ -40,13 +44,13 @@ public class GestionarProtectora {
                         String pelaje = Entrada.cadena("Pelaje: ");
                         boolean agresivo = Entrada.booleano("¿Es agresivo? (si/no): ");
 
-                        Gato g = new Gato(nombre, edad, fechaEntr, pelaje, agresivo);
+                        Gato g = new Gato(Animal.getContador(), nombre, edad, fechaEntr, pelaje, agresivo);
                         prot.anadirAnimal(g);
                     } else if (animal == 1) {
                         String raza = Entrada.cadena("Raza: ");
                         boolean entrenado = Entrada.booleano("¿Esta entrenado? (si/no): ");
 
-                        Perro p = new Perro(nombre, edad, fechaEntr, raza, entrenado);
+                        Perro p = new Perro(Animal.getContador(), nombre, edad, fechaEntr, raza, entrenado);
                         prot.anadirAnimal(p);
                     }
 
@@ -68,10 +72,31 @@ public class GestionarProtectora {
                     }
                 }
                 case 6 -> {
+                    System.out.println("--- TRAMITAR ADOPCIÓN ---");
+                    int id = Entrada.entero("ID del animal a adoptar: ");
+                    if (prot.getAnimal(id) != null) {
+                        Animal adop = prot.getAnimal(id);
+                        String nombre = Entrada.cadena("Nombre del adoptante: ");
+                        Fecha fechaAdop = Fecha.stringToFecha(Entrada.cadena("Fecha de adopción (dd/mm(aaaa): "));
+                        Adopcion ado = new Adopcion(fechaAdop, nombre, adop);
+                        prot.anadirAdopcion(ado);
+                    } else {
+                        System.out.println("Este id  no le pertenece a ningun animal");
+                    }
                 }
                 case 7 -> {
+                    int id = Entrada.entero("ID del animal para exportar: ");
+                    if (prot.getAnimal(id) != null) {
+                        String _nombreArchivos = Entrada.cadena("¿Nombre del Fichero?: ");
+                        prot.guardarAnimales(_nombreArchivos, prot.getAnimal(id));
+                    } else {
+                        System.out.println("No hay animal con ese ID");
+                    }
                 }
                 case 8 -> {
+                    System.out.println("--- HISTORICO DE ADOPCIONES ---");
+                    System.out.printf("%-16s %-10s %-5s\n", "Adoptante ", "Fecha ", "Animal");
+                    prot.listarAdoptados();
                 }
             }
 

@@ -14,6 +14,7 @@ import java.util.Objects;
  */
 public abstract class Animal implements IInteractuable, Serializable {
 
+    private static int contador = 101;
     private int id;
     private String nombre;
     private int edad;
@@ -21,19 +22,17 @@ public abstract class Animal implements IInteractuable, Serializable {
     private ArrayList<Revision> historialMedico;
 
     public Animal(String nombre, int edad, Fecha fechaEntrada) {
-        if (this.id != 101) {
-            this.id = 101;
-        } else {
-            this.id++;
-        }
+        this.id = contador;
+        contador++;
         this.nombre = nombre;
         this.edad = edad;
         this.fechaEntrada = fechaEntrada;
         this.historialMedico = new ArrayList<>();
     }
 
-    public Animal(int id, String nombre, int edad, Fecha fechaEntrada) {
-        this.id = id;
+    public Animal(int contador, String nombre, int edad, Fecha fechaEntrada) {
+        this.id = contador;
+        this.contador++;
         this.nombre = nombre;
         this.edad = edad;
         this.fechaEntrada = fechaEntrada;
@@ -90,6 +89,14 @@ public abstract class Animal implements IInteractuable, Serializable {
         this.nombre = nombre;
     }
 
+    public static void setContador(int contador) {
+        Animal.contador = contador;
+    }
+
+    public static int getContador() {
+        return contador;
+    }
+
     public ArrayList<Revision> getHistorialMedico() {
         return historialMedico;
     }
@@ -101,13 +108,14 @@ public abstract class Animal implements IInteractuable, Serializable {
     @Override
     public String toString() {
         String text;
-        text = String.format("%4d %8s %3d %6s %7f\n", id, nombre, edad, fechaEntrada, calcularTasaAdopcion());
+        text = String.format("[%3d] %-10s %-6d %-12s %-1.1f€", id, nombre, edad, fechaEntrada, calcularTasaAdopcion());
         return text;
     }
 
     public String fichaAnimal() {
         String text;
-        text = String.format("%5d %10s %5d %25s", id, nombre, edad, fechaEntrada);
+        text = String.format("[%3d] %-12s %4d %5s\n", id, nombre, edad, fechaEntrada);
         return text;
     }
+
 }

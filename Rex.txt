@@ -1,0 +1,4 @@
+[101] Rex             3 12/05/2023
+Pelaje: Pastor Aleman Agresivo: Si   
+Tasa de adopción: 9€
+[]

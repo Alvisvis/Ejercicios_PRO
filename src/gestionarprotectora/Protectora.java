@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -36,20 +37,26 @@ public class Protectora implements Serializable {
 
     public void listarAnimales() {
         for (Animal animale : animales) {
-            System.out.print(animale.toString());
+            System.out.print(animale.toString() + "    ");
+            animale.emitirSonido();
         }
     }
 
-    public Animal getAnimal(int _id, String nombre) {
-        for (Animal a : animales) {
-            if (a != null && a.getId() == _id && a.getNombre().equals(nombre)) {
-                return a;
-            }
+    public void listarAnimalesFicha() {
+        for (Animal animale : animales) {
+            System.out.print(animale.fichaAnimal() + "\n");
         }
-        return null;
-
     }
 
+//    public Animal getAnimal(String nombre) {
+//        for (Animal a : animales) {
+//            if (a != null && a.getNombre().equals(nombre)) {
+//                return a;
+//            }
+//        }
+//        return null;
+//
+//    }
     public Animal getAnimal(int _id) {
         for (Animal a : animales) {
             if (a != null && a.getId() == _id) {
@@ -61,16 +68,43 @@ public class Protectora implements Serializable {
     }
 
     public void anadirAnimal(Animal a) {
-        int id = a.getId();
-        String nombre = a.getNombre();
-
-        if (getAnimal(id, nombre) == null) {
+        if (a != null) {
             animales.add(a);
             System.out.println("Animal añadido");
         } else {
             System.out.println("Este animal ya exite");
         }
+    }
 
+    public void eliminarAnimal(int id) {
+        if (getAnimal(id) != null) {
+            Animal a = getAnimal(id);
+            animales.remove(a);
+        }
+    }
+
+    public void listarAdoptados() {
+        for (Adopcion adopcione : adopciones) {
+            System.out.println(adopcione.toString());
+        }
+    }
+
+//    public Adopcion getAdopcion(int id) {
+//        for (Adopcion ado : adopciones) {
+//            if (ado != null && ado.getAdoptado().getId() == id) {
+//                return ado;
+//            }
+//        }
+//        return null;
+//    }
+    public void anadirAdopcion(Adopcion ado) {
+        if (ado != null) {
+            adopciones.add(ado);
+            eliminarAnimal(ado.getAdoptado().getId());
+            System.out.println("Adopcion tramitada con exito para " + ado.getAdoptado().getNombre());
+        } else {
+            System.out.println("Ha ocurrrido un error");
+        }
     }
 
     public void anadirRevisionMedica(Revision revi, int id) {
@@ -83,7 +117,17 @@ public class Protectora implements Serializable {
     }
 
     //METODOS ARCHIVOS
+    public void guardarAnimales(String _nombreArchivos, Animal a) {
+        try (FileWriter fw = new FileWriter(_nombreArchivos, true)) {
+            fw.write(a.fichaAnimal());
+            System.out.println("Guardado Exitosamente");
+        } catch (Exception e) {
+            System.out.println("Algo fallo ");
+        }
+    }
+
     public void cargarAnimales(String _nombreArchivos) {
+
         try (Scanner sc = new Scanner(new File(_nombreArchivos))) {
             while (sc.hasNextLine()) {
                 String linea = sc.nextLine();
@@ -98,12 +142,12 @@ public class Protectora implements Serializable {
                 if (atributos[0].equals("Perro")) {
                     String raza = atributos[5];
                     boolean entrenado = Boolean.parseBoolean(atributos[6]);
-                    Perro p = new Perro(id, nombre, edad, fecha, raza, entrenado);
+                    Perro p = new Perro(Animal.getContador(), nombre, edad, fecha, raza, entrenado);
                     anadirAnimal(p);
                 } else if (atributos[0].equals("Gato")) {
                     String pelaje = atributos[5];
                     boolean esAgresivo = Boolean.parseBoolean(atributos[6]);
-                    Gato g = new Gato(id, nombre, edad, fecha, pelaje, esAgresivo);
+                    Gato g = new Gato(Animal.getContador(), nombre, edad, fecha, pelaje, esAgresivo);
                     anadirAnimal(g);
                 }
             }
