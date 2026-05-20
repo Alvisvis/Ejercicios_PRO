@@ -50,6 +50,16 @@ public class Protectora implements Serializable {
 
     }
 
+    public Animal getAnimal(int _id) {
+        for (Animal a : animales) {
+            if (a != null && a.getId() == _id) {
+                return a;
+            }
+        }
+        return null;
+
+    }
+
     public void anadirAnimal(Animal a) {
         int id = a.getId();
         String nombre = a.getNombre();
@@ -63,6 +73,16 @@ public class Protectora implements Serializable {
 
     }
 
+    public void anadirRevisionMedica(Revision revi, int id) {
+        if (id > 100) {
+            Animal a = getAnimal(id);
+            a.getHistorialMedico().add(revi);
+            System.out.println("Historial Actualizado");
+        }
+
+    }
+
+    //METODOS ARCHIVOS
     public void cargarAnimales(String _nombreArchivos) {
         try (Scanner sc = new Scanner(new File(_nombreArchivos))) {
             while (sc.hasNextLine()) {
@@ -92,7 +112,7 @@ public class Protectora implements Serializable {
         }
     }
 
-    public  Protectora leerBinario() {
+    public Protectora leerBinario() {
         Protectora p = new Protectora();
         try (ObjectInputStream ob = new ObjectInputStream(new FileInputStream("protectora.dat"))) {
             p = (Protectora) ob.readObject();

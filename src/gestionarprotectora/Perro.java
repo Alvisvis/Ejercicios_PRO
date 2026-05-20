@@ -10,16 +10,22 @@ import java.io.Serializable;
  *
  * @author DAW1-M
  */
-public class Perro extends Animal implements Serializable{
+public class Perro extends Animal implements Serializable {
 
     private String raza;
     private boolean entrenado;
 
+    public Perro(String nombre, int edad, Fecha fechaEntrada, String raza, boolean entrenado) {
+        super(nombre, edad, fechaEntrada);
+        this.raza = raza;
+        this.entrenado = entrenado;
+    }
     public Perro(int id, String nombre, int edad, Fecha fechaEntrada, String raza, boolean entrenado) {
         super(id, nombre, edad, fechaEntrada);
         this.raza = raza;
         this.entrenado = entrenado;
     }
+    
 
     @Override
     double calcularTasaAdopcion() {
@@ -45,8 +51,4 @@ public class Perro extends Animal implements Serializable{
 //                + "\nTasa de adopcion: " + calcularTasaAdopcion();
 //        return text;
 //    }
-
-    
-
-    
 }

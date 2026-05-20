@@ -15,6 +15,11 @@ public class Gato extends Animal implements Serializable{
     private String Pelaje;
     private boolean esAgresivo;
 
+    public Gato( String nombre, int edad, Fecha fechaEntrada, String Pelaje, boolean esAgresivo) {
+        super( nombre, edad, fechaEntrada);
+        this.Pelaje = Pelaje;
+        this.esAgresivo = esAgresivo;
+    }
     public Gato(int id, String nombre, int edad, Fecha fechaEntrada, String Pelaje, boolean esAgresivo) {
         super(id, nombre, edad, fechaEntrada);
         this.Pelaje = Pelaje;

@@ -12,9 +12,10 @@ public class GestionarProtectora {
 
     public static void main(String[] args) {
         Protectora prot = new Protectora();
-        
-        if (prot != null) prot = prot.leerBinario();
-        
+
+        if (prot != null) {
+            prot = prot.leerBinario();
+        }
 
         int op;
         do {
@@ -22,19 +23,49 @@ public class GestionarProtectora {
             op = Entrada.entero("Que opcion elijas? ");
             switch (op) {
                 case 1 -> {
-                    System.out.printf("%4d %8s %3d %6s %7f\n");
                     prot.listarAnimales();
                     System.out.println("");
                 }
                 case 2 -> {
+
                 }
                 case 3 -> {
+                    System.out.println("--- DAR DE ALTA NUEVO ANIMAL ---");
+                    int animal = Entrada.entero("¿Es (1) Perro o (2) Gato?: ");
+                    String nombre = Entrada.cadena("Nombre: ");
+                    int edad = Entrada.entero("Edad: ");
+                    Fecha fechaEntr = Fecha.stringToFecha(Entrada.cadena("Fecha entrada (dd/mm/aaaa): "));
+
+                    if (animal == 2) {
+                        String pelaje = Entrada.cadena("Pelaje: ");
+                        boolean agresivo = Entrada.booleano("¿Es agresivo? (si/no): ");
+
+                        Gato g = new Gato(nombre, edad, fechaEntr, pelaje, agresivo);
+                        prot.anadirAnimal(g);
+                    } else if (animal == 1) {
+                        String raza = Entrada.cadena("Raza: ");
+                        boolean entrenado = Entrada.booleano("¿Esta entrenado? (si/no): ");
+
+                        Perro p = new Perro(nombre, edad, fechaEntr, raza, entrenado);
+                        prot.anadirAnimal(p);
+                    }
+
                 }
                 case 4 -> {
                     String _nombreArchivos = Entrada.cadena("Cual es el nombre del archivo? ");
                     prot.cargarAnimales(_nombreArchivos);
                 }
                 case 5 -> {
+                    System.out.println("--- AÑADIR REVISION MEDICA ---");
+                    int id = Entrada.entero("ID del animal a revisar: ");
+                    if (prot.getAnimal(id) != null) {
+                        Fecha fechaRevi = Fecha.stringToFecha(Entrada.cadena("Fecha de la revisión (dd/mm/aaaa): "));
+                        String descrip = Entrada.cadena("Descripción de la revisión: ");
+                        Revision revi = new Revision(fechaRevi, descrip);
+                        prot.anadirRevisionMedica(revi, id);
+                    } else {
+                        System.out.println("Ese id no le pertenece a ningun animal");
+                    }
                 }
                 case 6 -> {
                 }

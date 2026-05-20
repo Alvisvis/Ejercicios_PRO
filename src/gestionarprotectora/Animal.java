@@ -20,6 +20,18 @@ public abstract class Animal implements IInteractuable, Serializable {
     private Fecha fechaEntrada;
     private ArrayList<Revision> historialMedico;
 
+    public Animal(String nombre, int edad, Fecha fechaEntrada) {
+        if (this.id != 101) {
+            this.id = 101;
+        } else {
+            this.id++;
+        }
+        this.nombre = nombre;
+        this.edad = edad;
+        this.fechaEntrada = fechaEntrada;
+        this.historialMedico = new ArrayList<>();
+    }
+
     public Animal(int id, String nombre, int edad, Fecha fechaEntrada) {
         this.id = id;
         this.nombre = nombre;
@@ -89,7 +101,7 @@ public abstract class Animal implements IInteractuable, Serializable {
     @Override
     public String toString() {
         String text;
-        text = String.format("%[4d] %8s %3d %6s %7f\n", id, nombre, edad, fechaEntrada, calcularTasaAdopcion());
+        text = String.format("%4d %8s %3d %6s %7f\n", id, nombre, edad, fechaEntrada, calcularTasaAdopcion());
         return text;
     }
 
