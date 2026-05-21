@@ -30,8 +30,7 @@ public class Profesor extends Persona {
     public void asignarModulo(Modulo modulo) {
         String nombre = Entrada.cadena("Introduce el nombre del modulo: ");
         int hora = Entrada.entero("¿Cuantas horas son el modulo? ");
-        
-        
+
     }
 
     public void eliminarModulo(Modulo modulo) {
@@ -40,7 +39,9 @@ public class Profesor extends Persona {
 
     @Override
     public String toString() {
-        return "Profesor{" + "especialidad=" + especialidad + ", modulosImpartidos=" + modulosImpartidos + '}';
+        String text;
+        text = String.format("%-15s %-10s", especialidad, modulosImpartidos);
+        return text;
     }
-    
+
 }

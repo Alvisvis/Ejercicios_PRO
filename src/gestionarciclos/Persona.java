@@ -11,6 +11,7 @@ import java.time.LocalDate;
  * @author DAW1-M
  */
 public abstract class Persona {
+
     private String dni;
     private String nombre;
     private String apellidos;
@@ -41,8 +42,9 @@ public abstract class Persona {
 
     @Override
     public String toString() {
-        return "Persona{" + "dni=" + dni + ", nombre=" + nombre + ", apellidos=" + apellidos + ", fechaNacimiento=" + fechaNacimiento + '}';
+        String text;
+        text = String.format("%-9s %-15s %-15s %-10s", dni, nombre, apellidos, fechaNacimiento);
+        return text;
     }
-    
-    
+
 }

@@ -22,11 +22,11 @@ public class Alumno extends Persona {
         this.ciclo = ciclo;
         this.calificaciones = new ArrayList<>();
     }
-    
+
     public void matricular(Modulo modulo) {
-        
+
     }
-    
+
 //    public void calificar(Modulo modulo, int nota) {
 //        
 //    }
@@ -44,11 +44,11 @@ public class Alumno extends Persona {
 //        }
 //        return media;
 //    }
-
     @Override
     public String toString() {
-        return "Alumno{" + "ciclo=" + ciclo + ", calificaciones=" + calificaciones + '}';
+        String text;
+        text = String.format("%-15s, -5-4d ", ciclo, calificaciones);
+        return text;
     }
-    
-    
+
 }
