@@ -1,0 +1,48 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package gestionarciclos;
+
+import java.time.LocalDate;
+
+/**
+ *
+ * @author DAW1-M
+ */
+public abstract class Persona {
+    private String dni;
+    private String nombre;
+    private String apellidos;
+    private LocalDate fechaNacimiento;
+
+    public Persona(String dni, String nombre, String apellidos, LocalDate fechaNacimiento) {
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public LocalDate getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    @Override
+    public String toString() {
+        return "Persona{" + "dni=" + dni + ", nombre=" + nombre + ", apellidos=" + apellidos + ", fechaNacimiento=" + fechaNacimiento + '}';
+    }
+    
+    
+}
