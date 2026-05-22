@@ -10,7 +10,7 @@ import java.time.LocalDate;
  *
  * @author DAW1-M
  */
-public abstract class Persona {
+public  class Persona {
 
     private String dni;
     private String nombre;

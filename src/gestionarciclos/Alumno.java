@@ -15,7 +15,7 @@ import java.util.List;
 public class Alumno extends Persona {
 
     private String ciclo;
-    private List<Calificaciones> calificaciones;
+    private List<Calificacion> calificaciones;
 
     public Alumno(String dni, String nombre, String apellidos, LocalDate fechaNacimiento, String ciclo) {
         super(dni, nombre, apellidos, fechaNacimiento);
@@ -23,31 +23,75 @@ public class Alumno extends Persona {
         this.calificaciones = new ArrayList<>();
     }
 
+//    public void matricular(Modulo modulo) {
+//        for (Calificaciones calificacion : calificaciones) {
+//            if (calificacion.getModulo().getNombre().equals(modulo.getNombre())) {
+//                System.out.println("Este alumno ya esta matriculado en este modulo");
+//                return;
+//            }
+//            calificacion = new Calificaciones(modulo);
+//            calificaciones.add(calificacion);
+//            System.out.println("Alumnno matriculado con exito");
+//
+//        }
+//    }
     public void matricular(Modulo modulo) {
+        if (!estaMatriculado(modulo)) {
+            Calificacion calificacion = new Calificacion(modulo);
+            calificaciones.add(calificacion);
+            System.out.println("Alumnno matriculado con exito");
 
+        }
     }
 
-//    public void calificar(Modulo modulo, int nota) {
-//        
-//    }
-//    
-//    public boolean promociones() {
-//        if (true) {
-//            
-//        }
-//    }
-//    
-//    public double getNotaMedia() {
-//        double media = 0.0;
-//        for (Calificaciones calificacione : calificaciones) {
-//            calificacione.getNotaFinal();
-//        }
-//        return media;
-//    }
+    private boolean estaMatriculado(Modulo modulo) {
+        boolean esta = false;
+        for (Calificacion calificacion : calificaciones) {
+            if (calificacion.getModulo().getNombre().equals(modulo.getNombre())) {
+                esta = true;
+                break;
+            }
+        }
+        return esta;
+    }
+
+    public void calificar(Modulo modulo, int nota) {
+        if (!estaMatriculado(modulo)) {
+            Calificacion cali = new Calificacion(modulo);
+            cali.setNotaFinal(nota);
+        }
+    }
+
+    public boolean promociones() {
+        int horasAprobadas = 0, horasTotal = 0;
+        boolean promociona = false;
+
+        for (Calificacion calificacion : calificaciones) {
+            int horas = calificacion.getModulo().getHoras();
+            horasTotal += horas;
+
+            if (calificacion.getNotaFinal() >= 5) {
+                horasAprobadas += horas;
+            }
+        }
+        if (horasAprobadas >= horasAprobadas * 0.5) {
+            System.out.println("El alumno si promociona");
+        }
+        return promociona;
+    }
+
+    public double getNotaMedia() {
+        double media = 0.0;
+        for (Calificacion calificacione : calificaciones) {
+            media = calificacione.getNotaFinal() / 2;
+        }
+        return media;
+    }
+
     @Override
     public String toString() {
-        String text;
-        text = String.format("%-15s, -5-4d ", ciclo, calificaciones);
+        String text = super.toString();
+        text += String.format(" %-15s, -5-4d ", ciclo, calificaciones);
         return text;
     }
 

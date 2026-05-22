@@ -27,14 +27,30 @@ public class Profesor extends Persona {
         return modulosImpartidos;
     }
 
-    public void asignarModulo(Modulo modulo) {
-        String nombre = Entrada.cadena("Introduce el nombre del modulo: ");
-        int hora = Entrada.entero("¿Cuantas horas son el modulo? ");
+    private boolean imparteModulo(Modulo modulo) {
+        boolean imparte = false;
+        if (!getModulosImpartidos().contains(modulo)) {
+            imparte = true;
+        }
+        return imparte;
+    }
 
+    public void asignarModulo(Modulo modulo) {
+        if (!imparteModulo(modulo)) {
+            modulosImpartidos.add(modulo);
+            System.out.println("Se le ha asignado el modulo al profesor");
+        } else {
+            System.out.println("Este profesor ya imparte este modulo");
+        }
     }
 
     public void eliminarModulo(Modulo modulo) {
-
+        if (imparteModulo(modulo)) {
+            modulosImpartidos.remove(modulo);
+            System.out.println("Se ha eliminado el modulo al profesor");
+        } else {
+            System.out.println("Este profesor no imparte este modulo");
+        }
     }
 
     @Override

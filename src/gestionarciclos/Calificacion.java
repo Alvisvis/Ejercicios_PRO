@@ -8,11 +8,11 @@ package gestionarciclos;
  *
  * @author DAW1-M
  */
-public class Calificaciones {
+public class Calificacion {
     private Modulo modulo;
     private int notaFinal;
 
-    public Calificaciones(Modulo modulo) {
+    public Calificacion(Modulo modulo) {
         this.modulo = modulo;
         this.notaFinal = 0;
     }
