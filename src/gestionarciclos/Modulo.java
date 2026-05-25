@@ -4,13 +4,14 @@
  */
 package gestionarciclos;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  *
  * @author DAW1-M
  */
-public class Modulo {
+public class Modulo implements Serializable {
 
     private String nombre;
     private int horas;

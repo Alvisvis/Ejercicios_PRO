@@ -4,11 +4,13 @@
  */
 package gestionarciclos;
 
+import java.io.Serializable;
+
 /**
  *
  * @author DAW1-M
  */
-public class Calificacion {
+public class Calificacion implements Serializable{
     private Modulo modulo;
     private int notaFinal;
 

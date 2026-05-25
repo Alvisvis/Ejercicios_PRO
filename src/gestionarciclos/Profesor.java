@@ -4,6 +4,7 @@
  */
 package gestionarciclos;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
  *
  * @author DAW1-M
  */
-public class Profesor extends Persona {
+public class Profesor extends Persona implements Serializable{
 
     private String especialidad;
     private List<Modulo> modulosImpartidos;
@@ -27,7 +28,7 @@ public class Profesor extends Persona {
         return modulosImpartidos;
     }
 
-    private boolean imparteModulo(Modulo modulo) {
+    public boolean imparteModulo(Modulo modulo) {
         boolean imparte = false;
         if (!getModulosImpartidos().contains(modulo)) {
             imparte = true;

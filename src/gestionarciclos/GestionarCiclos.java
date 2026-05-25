@@ -8,6 +8,9 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -16,15 +19,42 @@ import java.util.List;
  */
 public class GestionarCiclos {
 
-    private List<Alumno> listaAlumnos;
-    private List<Profesor> listaProfesores;
-    private List<Modulo> listaModulos;
+    private static List<Alumno> listaAlumnos = new ArrayList<>();
+    private static List<Profesor> listaProfesores = new ArrayList<>();
+    private static List<Modulo> listaModulos = new ArrayList<>();
+
+    private static final Modulo m1 = new Modulo("DAM", 500);
+    private static final Modulo m2 = new Modulo("DAW", 500);
+
+    private static final Alumno a1 = new Alumno("12345678z", "Fulanito", "Menganito", LocalDate.now(), "Programacion");
+    private static final Alumno a2 = new Alumno("87654321x", "Juanito", "Alimaña", LocalDate.now(), "Lenguaje de marca");
+    private static final Alumno a3 = new Alumno("14253678g", "Pepa", "La Cerdita", LocalDate.now(), "IPEII");
+
+    private static final Profesor p1 = new Profesor("12345678z", "Francisco", "Miranda", LocalDate.now(), "IPEII");
+    private static final Profesor p2 = new Profesor("87654321x", "Martin", "Rodriguez", LocalDate.now(), "Programacion");
+    private static final Profesor p3 = new Profesor("14253678g", "Paco", "Paquito", LocalDate.now(), "Programacion");
 
     public static void main(String[] args) {
         // TODO code application logic here
         GestionarCiclos ciclo = new GestionarCiclos();
         int op;
+        listaAlumnos.add(a1);
+        listaAlumnos.add(a2);
+        listaAlumnos.add(a3);
 
+        listaProfesores.add(p1);
+        listaProfesores.add(p2);
+        listaProfesores.add(p3);
+
+        listaModulos.add(m1);
+        listaModulos.add(m2);
+
+        a1.matricular(m1);
+        a2.matricular(m1);
+        a3.matricular(m2);
+
+        p2.asignarModulo(m1);
+        p1.asignarModulo(m2);
         do {
             menuPrincipal();
             op = Entrada.entero("Selecciona una opcion: ");
@@ -39,13 +69,13 @@ public class GestionarCiclos {
 
                     break;
                 case 4:
-
+                    ciclo.asignarNota();
                     break;
                 case 5:
-
+                    ciclo.mostrarExpedienteAlumno();
                     break;
                 case 6:
-
+                    ciclo.mostrarListadoAlumnoProfesor();
                     break;
                 case 7:
 
@@ -69,11 +99,11 @@ public class GestionarCiclos {
 
     public void darAltaAlumno() {
         Alumno a;
-        String dni = Entrada.cadena("Introduce el dni del alumno");
-        String nombre = Entrada.cadena("Introduce el nombre del alumno");
-        String apellidos = Entrada.cadena("Introduce los apellidos del alumno");
-        LocalDate fecha = LocalDate.parse(Entrada.cadena("Introduce la fecha de entrada del alumno"));
-        String ciclo = Entrada.cadena("Introduce el ciclo del alumno");
+        String dni = Entrada.cadena("Introduce el dni del alumno: ");
+        String nombre = Entrada.cadena("Introduce el nombre del alumno: ");
+        String apellidos = Entrada.cadena("Introduce los apellidos del alumno: ");
+        LocalDate fecha = LocalDate.parse(Entrada.cadena("Introduce la fecha de entrada del alumno: "));
+        String ciclo = Entrada.cadena("Introduce el ciclo del alumno: ");
         a = new Alumno(dni, nombre, apellidos, fecha, ciclo);
 
         if (listaAlumnos.add(a)) {
@@ -86,11 +116,11 @@ public class GestionarCiclos {
 
     public void darAltaProfesor() {
         Profesor p;
-        String dni = Entrada.cadena("Introduce el dni del alumno");
-        String nombre = Entrada.cadena("Introduce el nombre del alumno");
-        String apellidos = Entrada.cadena("Introduce los apellidos del alumno");
-        LocalDate fecha = LocalDate.parse(Entrada.cadena("Introduce la fecha de entrada del alumno"));
-        String especialidad = Entrada.cadena("Introduce el ciclo del alumno");
+        String dni = Entrada.cadena("Introduce el dni del alumno: ");
+        String nombre = Entrada.cadena("Introduce el nombre del alumno: ");
+        String apellidos = Entrada.cadena("Introduce los apellidos del alumno: ");
+        LocalDate fecha = LocalDate.parse(Entrada.cadena("Introduce la fecha de entrada del alumno: "));
+        String especialidad = Entrada.cadena("Introduce el ciclo del alumno: ");
         p = new Profesor(dni, nombre, apellidos, fecha, especialidad);
 
         if (listaProfesores.add(p)) {
@@ -101,12 +131,17 @@ public class GestionarCiclos {
 
     }
 
-    public void mostrarExpedienteAlumno(String dni) {
-        for (Alumno listaAlumno : listaAlumnos) {
-            if (listaAlumno.getDni().equals(dni)) {
-                System.out.println(listaAlumno.toString());
-            }
+    public void mostrarExpedienteAlumno() {
+        listaAlumnos.sort((o1, o2) -> o1.getCiclo().compareTo(o2.getCiclo()));
+        for (Alumno alumno : listaAlumnos) {
+            System.out.println(alumno.toString());
         }
+    }
+
+    public void mostrarListadoAlumnoProfesor() {
+        listaAlumnos.sort((o1, o2) -> o1.getApellidos().compareTo(o2.getApellidos()));
+
+        
     }
 
     public void asignarNota() {
@@ -124,14 +159,6 @@ public class GestionarCiclos {
         }
     }
 
-//    public boolean getAlumno(String dni) {
-//        boolean existe = false;
-//        for (Alumno listaAlumno : listaAlumnos) {
-//            if (listaAlumno.getDni().equals(listaAlumno)) {
-//                existe = true;
-//            }
-//        }
-//    }
 }
 //    public void guardarFichero(String _nombreFichero){
 //        try (ObjectInputStream obs = new ObjectInputStream(new FileInputStream(_nombreFichero))){

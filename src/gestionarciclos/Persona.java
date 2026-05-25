@@ -4,13 +4,14 @@
  */
 package gestionarciclos;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
  *
  * @author DAW1-M
  */
-public  class Persona {
+public  class Persona implements Serializable{
 
     private String dni;
     private String nombre;

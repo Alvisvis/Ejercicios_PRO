@@ -4,6 +4,7 @@
  */
 package gestionarciclos;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
  *
  * @author DAW1-M
  */
-public class Alumno extends Persona {
+public class Alumno extends Persona implements Serializable {
 
     private String ciclo;
     private List<Calificacion> calificaciones;
@@ -23,18 +24,14 @@ public class Alumno extends Persona {
         this.calificaciones = new ArrayList<>();
     }
 
-//    public void matricular(Modulo modulo) {
-//        for (Calificaciones calificacion : calificaciones) {
-//            if (calificacion.getModulo().getNombre().equals(modulo.getNombre())) {
-//                System.out.println("Este alumno ya esta matriculado en este modulo");
-//                return;
-//            }
-//            calificacion = new Calificaciones(modulo);
-//            calificaciones.add(calificacion);
-//            System.out.println("Alumnno matriculado con exito");
-//
-//        }
-//    }
+    public List<Calificacion> getCalificaciones() {
+        return calificaciones;
+    }
+
+    public String getCiclo() {
+        return ciclo;
+    }
+
     public void matricular(Modulo modulo) {
         if (!estaMatriculado(modulo)) {
             Calificacion calificacion = new Calificacion(modulo);
@@ -44,7 +41,7 @@ public class Alumno extends Persona {
         }
     }
 
-    private boolean estaMatriculado(Modulo modulo) {
+    public boolean estaMatriculado(Modulo modulo) {
         boolean esta = false;
         for (Calificacion calificacion : calificaciones) {
             if (calificacion.getModulo().getNombre().equals(modulo.getNombre())) {
@@ -74,24 +71,25 @@ public class Alumno extends Persona {
                 horasAprobadas += horas;
             }
         }
-        if (horasAprobadas >= horasAprobadas * 0.5) {
+        if (horasAprobadas >= horasTotal * 0.5) {
             System.out.println("El alumno si promociona");
         }
         return promociona;
     }
 
     public double getNotaMedia() {
-        double media = 0.0;
-        for (Calificacion calificacione : calificaciones) {
-            media = calificacione.getNotaFinal() / 2;
+        double suma = 0;
+        for (Calificacion c : calificaciones) {
+            suma += c.getNotaFinal();
         }
+        double media = calificaciones.isEmpty() ? 0 : suma / calificaciones.size();
         return media;
     }
 
     @Override
     public String toString() {
         String text = super.toString();
-        text += String.format(" %-15s, -5-4d ", ciclo, calificaciones);
+        text += String.format(" %-15s", ciclo);
         return text;
     }
 
