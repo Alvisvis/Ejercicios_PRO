@@ -27,7 +27,6 @@ public class Profesor extends Persona implements Serializable{
     public List<Modulo> getModulosImpartidos() {
         return modulosImpartidos;
     }
-
     public boolean imparteModulo(Modulo modulo) {
         boolean imparte = false;
         if (!getModulosImpartidos().contains(modulo)) {

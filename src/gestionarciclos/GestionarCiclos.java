@@ -23,16 +23,16 @@ public class GestionarCiclos {
     private static List<Profesor> listaProfesores = new ArrayList<>();
     private static List<Modulo> listaModulos = new ArrayList<>();
 
-    private static final Modulo m1 = new Modulo("DAM", 500);
-    private static final Modulo m2 = new Modulo("DAW", 500);
+    private static final Modulo m1 = new Modulo("Programacion", 500);
+    private static final Modulo m2 = new Modulo("IPEII", 500);
 
-    private static final Alumno a1 = new Alumno("12345678z", "Fulanito", "Menganito", LocalDate.now(), "Programacion");
-    private static final Alumno a2 = new Alumno("87654321x", "Juanito", "Alimaña", LocalDate.now(), "Lenguaje de marca");
-    private static final Alumno a3 = new Alumno("14253678g", "Pepa", "La Cerdita", LocalDate.now(), "IPEII");
+    private static final Alumno a1 = new Alumno("12345678z", "Fulanito", "Menganito", LocalDate.now(), "DAM");
+    private static final Alumno a2 = new Alumno("87654321x", "Juanito", "Alimaña", LocalDate.now(), "DAM");
+    private static final Alumno a3 = new Alumno("14253678g", "Pepa", "La Cerdita", LocalDate.now(), "DAW");
 
-    private static final Profesor p1 = new Profesor("12345678z", "Francisco", "Miranda", LocalDate.now(), "IPEII");
-    private static final Profesor p2 = new Profesor("87654321x", "Martin", "Rodriguez", LocalDate.now(), "Programacion");
-    private static final Profesor p3 = new Profesor("14253678g", "Paco", "Paquito", LocalDate.now(), "Programacion");
+    private static final Profesor p1 = new Profesor("12345678z", "Francisco", "Miranda", LocalDate.now(), "DAM");
+    private static final Profesor p2 = new Profesor("87654321x", "Martin", "Rodriguez", LocalDate.now(), "DAM");
+    private static final Profesor p3 = new Profesor("14253678g", "Paco", "Paquito", LocalDate.now(), "DAW");
 
     public static void main(String[] args) {
         // TODO code application logic here
@@ -53,8 +53,8 @@ public class GestionarCiclos {
         a2.matricular(m1);
         a3.matricular(m2);
 
-        p2.asignarModulo(m1);
-        p1.asignarModulo(m2);
+        p1.asignarModulo(m1);
+        p2.asignarModulo(m2);
         do {
             menuPrincipal();
             op = Entrada.entero("Selecciona una opcion: ");
@@ -75,8 +75,17 @@ public class GestionarCiclos {
                     ciclo.mostrarExpedienteAlumno();
                     break;
                 case 6:
-                    ciclo.mostrarListadoAlumnoProfesor();
+                    Profesor profe = null;
+                    String dni = Entrada.cadena("Cual es el dni del profesor quieres saber sus alumnos? ");
+                    for (Profesor lista : listaProfesores) {
+                        if (lista.getDni().equals(dni)) {
+                            profe = lista;
+                            break;
+                        }
+                    }
+                    ciclo.mostrarListadoAlumnoProfesor(profe);
                     break;
+
                 case 7:
 
                     break;
@@ -138,10 +147,24 @@ public class GestionarCiclos {
         }
     }
 
-    public void mostrarListadoAlumnoProfesor() {
-        listaAlumnos.sort((o1, o2) -> o1.getApellidos().compareTo(o2.getApellidos()));
+    public void mostrarListadoAlumnoProfesor(Profesor profe) {
 
-        
+        List<Alumno> alumnosProfesor = new ArrayList<>();
+
+        for (Alumno alumno : listaAlumnos) {
+
+            for (Calificacion c : alumno.getCalificaciones()) {
+
+                if (profe.imparteModulo(c.getModulo())) {
+                    alumnosProfesor.add(alumno);
+                }
+            }
+        }
+        listaAlumnos.sort((o1, o2) -> o1.getApellidos().compareTo(o2.getApellidos()));
+        for (Alumno alumno : alumnosProfesor) {
+            System.out.println(alumno.toString());
+        }
+
     }
 
     public void asignarNota() {
