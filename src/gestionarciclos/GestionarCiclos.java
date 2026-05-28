@@ -23,16 +23,16 @@ public class GestionarCiclos {
     private static List<Profesor> listaProfesores = new ArrayList<>();
     private static List<Modulo> listaModulos = new ArrayList<>();
 
-    private static final Modulo m1 = new Modulo("Programacion", 500);
-    private static final Modulo m2 = new Modulo("IPEII", 500);
+    private static  Modulo m1 = new Modulo("Programacion", 500);
+    private static  Modulo m2 = new Modulo("IPEII", 500);
 
-    private static final Alumno a1 = new Alumno("12345678z", "Fulanito", "Menganito", LocalDate.now(), "DAM");
-    private static final Alumno a2 = new Alumno("87654321x", "Juanito", "Alimaña", LocalDate.now(), "DAM");
-    private static final Alumno a3 = new Alumno("14253678g", "Pepa", "La Cerdita", LocalDate.now(), "DAW");
+    private static  Alumno a1 = new Alumno("12345678z", "Fulanito", "Menganito", LocalDate.now(), "DAM");
+    private static  Alumno a2 = new Alumno("87654321x", "Juanito", "Alimaña", LocalDate.now(), "DAM");
+    private static  Alumno a3 = new Alumno("14253678g", "Pepa", "La Cerdita", LocalDate.now(), "DAW");
 
-    private static final Profesor p1 = new Profesor("12345678z", "Francisco", "Miranda", LocalDate.now(), "DAM");
-    private static final Profesor p2 = new Profesor("87654321x", "Martin", "Rodriguez", LocalDate.now(), "DAM");
-    private static final Profesor p3 = new Profesor("14253678g", "Paco", "Paquito", LocalDate.now(), "DAW");
+    private static  Profesor p1 = new Profesor("14", "Francisco", "Miranda", LocalDate.now(), "DAM");
+    private static  Profesor p2 = new Profesor("87654321x", "Martin", "Rodriguez", LocalDate.now(), "DAM");
+    private static  Profesor p3 = new Profesor("58", "Paco", "Paquito", LocalDate.now(), "DAW");
 
     public static void main(String[] args) {
         // TODO code application logic here
@@ -75,15 +75,9 @@ public class GestionarCiclos {
                     ciclo.mostrarExpedienteAlumno();
                     break;
                 case 6:
-                    Profesor profe = null;
                     String dni = Entrada.cadena("Cual es el dni del profesor quieres saber sus alumnos? ");
-                    for (Profesor lista : listaProfesores) {
-                        if (lista.getDni().equals(dni)) {
-                            profe = lista;
-                            break;
-                        }
-                    }
-                    ciclo.mostrarListadoAlumnoProfesor(profe);
+
+                    ciclo.mostrarListadoAlumnoProfesor(dni);
                     break;
 
                 case 7:
@@ -147,16 +141,19 @@ public class GestionarCiclos {
         }
     }
 
-    public void mostrarListadoAlumnoProfesor(Profesor profe) {
+    public void mostrarListadoAlumnoProfesor(String dni) {
 
         List<Alumno> alumnosProfesor = new ArrayList<>();
 
-        for (Alumno alumno : listaAlumnos) {
+        for (Profesor profe : listaProfesores) {
 
-            for (Calificacion c : alumno.getCalificaciones()) {
+            for (Alumno alumno : listaAlumnos) {
 
-                if (profe.imparteModulo(c.getModulo())) {
-                    alumnosProfesor.add(alumno);
+                for (Calificacion c : alumno.getCalificaciones()) {
+
+                    if (profe.imparteModulo(c.getModulo())) {
+                        alumnosProfesor.add(alumno);
+                    }
                 }
             }
         }

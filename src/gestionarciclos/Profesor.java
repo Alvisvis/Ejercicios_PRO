@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author DAW1-M
  */
-public class Profesor extends Persona implements Serializable{
+public class Profesor extends Persona implements Serializable {
 
     private String especialidad;
     private List<Modulo> modulosImpartidos;
@@ -27,10 +27,14 @@ public class Profesor extends Persona implements Serializable{
     public List<Modulo> getModulosImpartidos() {
         return modulosImpartidos;
     }
+
     public boolean imparteModulo(Modulo modulo) {
         boolean imparte = false;
-        if (!getModulosImpartidos().contains(modulo)) {
-            imparte = true;
+
+        for (Modulo impartido : modulosImpartidos) {
+            if (impartido.getNombre().contains(modulo.getNombre())) {
+                imparte = true;
+            }
         }
         return imparte;
     }
