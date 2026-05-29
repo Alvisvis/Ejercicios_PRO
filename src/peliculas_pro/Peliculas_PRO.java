@@ -4,8 +4,7 @@
  */
 package peliculas_pro;
 
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
+;
 
 /**
  *
@@ -16,48 +15,31 @@ public class Peliculas_PRO {
     //---------------------------------------------------------------
     public static void main(String[] args) {
         Cine miCine = new Cine("Alvis");
-        miCine.cargarBinario();
+        miCine = miCine.cargarBinario();
 
         int opcion = menu();
         while (opcion != 0) {
             switch (opcion) {
-                case 1:
+                case 1 ->
                     miCine.verPeliculas();
-                    break;
-                case 2:
+                case 2 -> {
                     String nombreFichero = ES.leerCadena("¿Cual es el nombre del fichero? ");
                     miCine.cargarFichero(nombreFichero);
-                    break;
-                case 3:
-
-                    break;
-                case 4:
-
-                    break;
-                case 5:
-
-                    break;
+                }
+                case 3 -> {
+                    String titulo = ES.leerCadena("Cual es el titulo de la pelicula?");
+                    miCine.eliminarPelicula(miCine.buscarPelicula(titulo));
+                }
+                case 4 -> {
+                }
+                case 5 -> {
+                }
             }
             ES.leerCadena("\nPulse INTRO para continuar.");
             opcion = menu();
         }
-        guardaBinario(miCine);
+        miCine.guardaBinario();
         System.out.println("Fin de la ejecución de la aplicación.");
-    }
-
-    //---------------------------------------------------------------
-    /**
-     * Metodo que guarda los datos binarios
-     *
-     * @param cinepolis
-     */
-    public static void guardaBinario(Cine cinepolis) {
-
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("Peliculas.dat"))) {
-            oos.writeObject(cinepolis);
-        } catch (Exception e) {
-            System.out.println("Ha habido un fallo" + e);
-        }
     }
 
     //---------------------------------------------------------------

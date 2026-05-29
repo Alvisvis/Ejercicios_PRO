@@ -7,7 +7,9 @@ package peliculas_pro;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -27,15 +29,19 @@ public class Cine implements Serializable, IOrdenar {
         this.peliculas = new ArrayList<>();
     }
 
-    public Cine() {
-        this.peliculas = new ArrayList<>();
-
+    public ArrayList<Pelicula> getPeliculas() {
+        return peliculas;
     }
 
     public void verPeliculas() {
         String text;
         text = "Cine: " + autor + "\nPeliculas: ";
         System.out.println(text);
+
+        if (peliculas == null || peliculas.isEmpty()) {
+            cargarBinario();
+        }
+
         for (Pelicula pelicula : peliculas) {
             System.out.println(pelicula.toString());
         }
@@ -47,6 +53,25 @@ public class Cine implements Serializable, IOrdenar {
             System.out.println("Pelicula añadida");
         } else {
             System.out.println("Esta Pelicula ya exite");
+        }
+    }
+
+    public Pelicula buscarPelicula(String titulo) {
+        for (Pelicula peli : peliculas) {
+            if (peli != null && peli.getTitulo().equals(titulo)) {
+                return peli;
+            }
+        }
+        return null;
+    }
+
+    public void eliminarPelicula(Pelicula pe) {
+        if (buscarPelicula(pe.getTitulo()) == null) {
+            System.out.println("Esa pelicula no existe");
+        } else {
+            System.out.println(buscarPelicula(pe.getTitulo()).toString());
+            peliculas.remove(pe);
+            System.out.println("Pelicula eliminada");
         }
     }
 
@@ -73,9 +98,11 @@ public class Cine implements Serializable, IOrdenar {
                 int anno = Integer.parseInt(atributos[5]);
                 Fecha fecha = new Fecha(dia, mes, anno);
                 int duracion = Integer.parseInt(atributos[6]);
+
                 Pelicula peli = new Pelicula(fecha, genero, titulo, pais, duracion);
                 anadirPelicula(peli);
             }
+
         } catch (FileNotFoundException e) {
             System.out.println("No se ha encontrado el archivo");
 
@@ -88,18 +115,33 @@ public class Cine implements Serializable, IOrdenar {
     /**
      * Metodo que carga los datos binarios
      *
-     * @return 
+     * @return
      */
     public Cine cargarBinario() {
-        Cine cinepolis = new Cine();
+        Cine cinepolis = new Cine(this.autor);
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Peliculas.dat"))) {
             cinepolis = (Cine) ois.readObject();
             ois.close();
         } catch (Exception e) {
-            System.out.println("Ha habido un fallo" +e );
+            System.out.println("Ha habido un fallo" + e);
         }
         return cinepolis;
     }
 
+    //---------------------------------------------------------------
+    /**
+     * Metodo que guarda los datos binarios
+     *
+     * @param cinepolis
+     */
+    public void guardaBinario() {
+
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("Peliculas.dat"))) {
+
+            oos.writeObject(this);
+        } catch (Exception e) {
+            System.out.println("Ha habido un fallo" + e);
+        }
+    }
 }
