@@ -47,6 +47,49 @@ public class Cine implements Serializable, IOrdenar {
         }
     }
 
+    public void modificarPelicula(Pelicula peli) {
+        if (buscarPelicula(peli.getTitulo()) == null) {
+            System.out.println("Esa pelicula no existe");
+        } else {
+            int op = ES.leerEntero("""
+                                   ¿Cual es el dato que quieres cambiar de la Pelicula? 
+                                   1. Titulo
+                                   2. Genero
+                                   3. Pais
+                                   4. Fecha
+                                   5. Duraci\u00f3n
+                                   Introduce alguna de las opciones: """);
+            switch (op) {
+                case 1 -> {
+                    String nuevoTitu = ES.leerCadena("Introduce el nuevo titulo: ");
+                    buscarPelicula(peli.getTitulo()).setTitulo(nuevoTitu);
+                }
+                case 2 -> {
+                    String nuevoGene = ES.leerCadena("Introduce el nuevo Genero: ");
+                    buscarPelicula(peli.getTitulo()).setGenero(nuevoGene);
+                }
+                case 3 -> {
+                    String nuevoPais = ES.leerCadena("Introduce el nuevo Pais: ");
+                    buscarPelicula(peli.getTitulo()).setPais(nuevoPais);
+                }
+                case 4 -> {
+                    int nuevoDia = ES.leerEntero("Introduce el nuevo dia: ");
+                    int nuevoMes = ES.leerEntero("Introduce el nuevo mes");
+                    int nuevoAnno = ES.leerEntero("Introduce el nuevo año: ");
+                    Fecha nuevaFecha = new Fecha(nuevoDia, nuevoMes, nuevoAnno);
+                    buscarPelicula(peli.getTitulo()).setFecha(nuevaFecha);
+                }
+                case 5 -> {
+                    int nuevoDura = ES.leerEntero("Introduce el nuevo Duracion: ");
+                    buscarPelicula(peli.getTitulo()).setDuracion(nuevoDura);
+                }
+                default -> {
+                    System.out.println("No es una opcion correcta");
+                }
+            }
+        }
+    }
+
     public void anadirPelicula(Pelicula peli) {
         if (peli != null) {
             peliculas.add(peli);
@@ -133,7 +176,6 @@ public class Cine implements Serializable, IOrdenar {
     /**
      * Metodo que guarda los datos binarios
      *
-     * @param cinepolis
      */
     public void guardaBinario() {
 

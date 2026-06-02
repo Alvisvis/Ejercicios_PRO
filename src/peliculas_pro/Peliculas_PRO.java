@@ -31,8 +31,11 @@ public class Peliculas_PRO {
                     miCine.eliminarPelicula(miCine.buscarPelicula(titulo));
                 }
                 case 4 -> {
+                    String titulo = ES.leerCadena("Cual es el titulo de la pelicula que quieres modificar? ");
+                    miCine.modificarPelicula(miCine.buscarPelicula(titulo));
                 }
                 case 5 -> {
+
                 }
             }
             ES.leerCadena("\nPulse INTRO para continuar.");

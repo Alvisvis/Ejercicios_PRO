@@ -9,7 +9,6 @@ import java.util.Calendar;
  */
 public class Fecha implements Serializable{
 
-
     private int dia;
     private int mes;
     private int año;
