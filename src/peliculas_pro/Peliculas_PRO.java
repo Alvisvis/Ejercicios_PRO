@@ -6,6 +6,8 @@ package peliculas_pro;
 
 ;
 
+import java.util.Comparator;
+
 /**
  *
  * @author DAW1-M
@@ -35,7 +37,29 @@ public class Peliculas_PRO {
                     miCine.modificarPelicula(miCine.buscarPelicula(titulo));
                 }
                 case 5 -> {
-
+                    int criterio = ES.leerEntero("""
+                                                 \u00bfDe que forma quieres ordenar las peliculas?
+                                                 1. Por Fechas
+                                                 2. Por Titulos
+                                                 3. Por Paises
+                                                 4. Por G\u00e9nero
+                                                 Introduce una de estas opciones: """);
+                    switch (criterio) {
+                        case 1 -> {
+//                            miCine.ordenarLista(Comparator.comparing(Pelicula::getFecha));
+                        }
+                        case 2 -> {
+                            miCine.ordenarLista(Comparator.comparing(Pelicula::getTitulo));
+                        }
+                        case 3 -> {
+                            miCine.ordenarLista(Comparator.comparing(Pelicula::getPais)
+                                    .thenComparing(Pelicula::getTitulo));
+                        }
+                        case 4 -> {
+                            miCine.ordenarLista(Comparator.comparing(Pelicula::getGenero)
+                                    .thenComparing(Pelicula::getTitulo));
+                        }
+                    }
                 }
             }
             ES.leerCadena("\nPulse INTRO para continuar.");

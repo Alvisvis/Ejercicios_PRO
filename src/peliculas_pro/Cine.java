@@ -46,7 +46,7 @@ public class Cine implements Serializable, IOrdenar {
             System.out.println(pelicula.toString());
         }
     }
-
+    
     public void modificarPelicula(Pelicula peli) {
         if (buscarPelicula(peli.getTitulo()) == null) {
             System.out.println("Esa pelicula no existe");
@@ -120,7 +120,7 @@ public class Cine implements Serializable, IOrdenar {
 
     @Override
     public void ordenarLista(Comparator criterio) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        peliculas.sort(criterio);
     }
 
     @Override
