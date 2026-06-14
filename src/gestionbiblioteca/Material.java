@@ -34,6 +34,14 @@ public abstract class Material implements Serializable {
         this.codigo = codigo;
     }
 
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;

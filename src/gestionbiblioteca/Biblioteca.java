@@ -6,6 +6,7 @@ package gestionbiblioteca;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -60,6 +61,73 @@ public class Biblioteca implements Serializable, IGestionPrestamo {
         }
     }
 
+    public void cargarPrestamos(String _nombreFichero) {
+        try (Scanner sc = new Scanner(new File(_nombreFichero))) {
+            while (sc.hasNextLine()) {
+                String linea = sc.nextLine();
+                String[] atributos = linea.split(";");
+
+                //Atributos
+                String codigoMat = atributos[1];
+                String nombreUsu = atributos[2];
+                String fechaPresString = atributos[3];
+                Fecha fechaPre = Fecha.stringToFecha(fechaPresString);
+                String fechaDevoString = atributos[4];
+                Fecha fechaDevo = Fecha.stringToFecha(fechaDevoString);
+                Prestamo pre = new Prestamo(codigoMat, nombreUsu, fechaPre, fechaDevo);
+                prestamos.add(pre);
+
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("No se ha encontrado el archivo");
+        } catch (NumberFormatException e) {
+            System.out.println("Ha fallado los atributos, hay uno mal indicado o de mas");
+        }
+    }
+
+    public Material buscarMaterial(String codigo) {
+        Material mat = null;
+        for (Material material : materiales) {
+            if (material.getCodigo().equals(codigo)) {
+                mat = material;
+            }
+        }
+        return mat;
+    }
+
+    public void verMateriales() {
+        materiales.sort((Material o1, Material o2) -> o1.getTitulo().compareTo(o2.getTitulo()));
+
+        for (Material material : materiales) {
+            System.out.println(material.toString());
+        }
+    }
+
+    public void guuardarPrestamos(String _nombreFichero) {
+        try (PrintWriter pw = new PrintWriter(_nombreFichero)) {
+
+            for (Prestamo pre : prestamos) {
+                pw.println(
+                        pre.getCodigoMaterial() + ";"
+                        + pre.getNombreUsuario() + ";"
+                        + pre.getFechaPrestamo() + ";"
+                        + pre.getFechaDevolucion()
+                );
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("No se ha podido crear el archivo");
+        }
+    }
+
+    public void multasTotal() {
+        int diasRetraso = 0;
+        
+        for (Prestamo prestamo : prestamos) {
+             if (prestamo.estaActivo()) {
+               
+            }
+        }
+    }
     @Override
     public boolean insertarPrestamo(Prestamo p) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

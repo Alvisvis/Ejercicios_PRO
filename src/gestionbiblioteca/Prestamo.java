@@ -34,6 +34,22 @@ public class Prestamo implements Serializable{
         return activo;
     }
 
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+
+    public Fecha getFechaDevolucion() {
+        return fechaDevolucion;
+    }
+
+    public void setFechaDevolucion(Fecha fechaDevolucion) {
+        this.fechaDevolucion = fechaDevolucion;
+    }
+
     public String getCodigoMaterial() {
         return codigoMaterial;
     }

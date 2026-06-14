@@ -7,7 +7,6 @@ package gestionbiblioteca;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Scanner;
 
 /**
  *
@@ -31,6 +30,30 @@ public class Fecha implements Serializable {
             this.mes = calendario.get(GregorianCalendar.MONTH);
             this.anho = calendario.get(GregorianCalendar.YEAR);
         }
+    }
+
+    public int getDia() {
+        return dia;
+    }
+
+    public void setDia(int dia) {
+        this.dia = dia;
+    }
+
+    public int getMes() {
+        return mes;
+    }
+
+    public void setMes(int mes) {
+        this.mes = mes;
+    }
+
+    public int getAnho() {
+        return anho;
+    }
+
+    public void setAnho(int anho) {
+        this.anho = anho;
     }
 
     private boolean esBisiesto(int anyo) {
@@ -84,7 +107,7 @@ public class Fecha implements Serializable {
     }
 
     public static Fecha stringToFecha(String s) {
-        
+
         String[] delimitador = s.split("/");
 
         int dia = Integer.parseInt(delimitador[0]);
@@ -93,6 +116,23 @@ public class Fecha implements Serializable {
 
         Fecha fechaNueva = new Fecha(dia, mes, anyo);
         return fechaNueva;
+    }
+
+    public static long diasEntreFechas(Fecha f1, Fecha f2) {
+
+        GregorianCalendar fecha1 = new GregorianCalendar(
+                f1.getAnho(),
+                f1.getMes() - 1,
+                f1.getDia());
+
+        GregorianCalendar fecha2 = new GregorianCalendar(
+                f2.getAnho(),
+                f2.getMes() - 1,
+                f2.getDia());
+
+        long milisegundos = Math.abs(fecha2.getTimeInMillis() - fecha1.getTimeInMillis());
+
+        return milisegundos / (1000 * 60 * 60 * 24);
     }
 
 }
